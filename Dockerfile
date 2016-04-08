@@ -28,6 +28,7 @@ RUN wget https://phar.phpunit.de/phpunit.phar -O phpunit && \
 RUN composer global require "squizlabs/php_codesniffer"
 
 RUN npm i -g npm
+RUN npm i -g eslint babel-eslint
 
 WORKDIR /
 
