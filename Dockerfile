@@ -2,11 +2,10 @@ FROM alpine:3.3
 MAINTAINER Jeremy Chang <jeremychang@qnap.com>
 
 RUN apk update && \
-    apk add bash unzip curl wget git fakeroot ca-certificates tzdata \
-            php-fpm php-json php-zlib php-xml php-pdo php-phar php-openssl \
-            php-pdo_mysql php-mysqli \
-            php-gd php-iconv php-mcrypt \
-            openjdk7-jre
+    apk add --no-cache bash unzip curl wget git fakeroot ca-certificates tzdata \
+            php-fpm php-json php-zlib php-xml php-xmlreader php-pdo php-phar php-openssl \
+            php-pdo_mysql php-mysqli php-gd php-iconv php-mcrypt \
+            openjdk7-jre nodejs
 
 RUN apk add -u musl
 RUN rm -rf /var/cache/apk/*
@@ -28,9 +27,11 @@ RUN wget https://phar.phpunit.de/phpunit.phar -O phpunit && \
 
 RUN composer global require "squizlabs/php_codesniffer"
 
-RUN ln -s $(which awk) /bin/awk
+RUN npm i -g npm
 
 WORKDIR /
+
+RUN ln -s $(which awk) /bin/awk
 
 ADD files/entry.sh /
 ENTRYPOINT ["/entry.sh"]
