@@ -10,5 +10,6 @@ $ docker run -it --rm -v ${PWD}:/my_project mrmoneyc/docker-devutils bash -c "cd
 
 Utility List
 ----------
-- Composer
-- PHPUnit
+- [Composer](https://getcomposer.org/)
+- [PHPUnit](https://phpunit.de/)
+- [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)

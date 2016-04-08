@@ -2,7 +2,7 @@
 
 set -e
 
-PATH=$PATH:/bin
+PATH=$PATH:/bin:/root/.composer/vendor/bin
 
 echo $*
 if [ "$#" -ge 1 ]; then
