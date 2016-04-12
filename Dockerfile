@@ -8,7 +8,6 @@ RUN apk update && \
             openjdk7-jre nodejs
 
 RUN apk add -u musl
-RUN rm -rf /var/cache/apk/*
 
 RUN cp /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
     echo "Asia/Taipei" >  /etc/timezone
@@ -28,7 +27,12 @@ RUN wget https://phar.phpunit.de/phpunit.phar -O phpunit && \
 RUN composer global require "squizlabs/php_codesniffer"
 
 RUN npm i -g npm
-RUN npm i -g eslint babel-eslint
+RUN npm i -g eslint babel-eslint gulp
+
+# Clear cache
+RUN rm -rf ~/.npm && npm cache clear && \
+    composer global clear-cache && \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /
 
