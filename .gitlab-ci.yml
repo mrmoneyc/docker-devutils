@@ -1,0 +1,10 @@
+stages:
+  - build
+Build:
+  stage: build
+  script:
+    - docker build -t sw5-docker-devutils .
+  only:
+    - master
+  tags:
+    - docker_in_docker_runner
