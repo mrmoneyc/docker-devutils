@@ -13,3 +13,5 @@ Utility List
 - [Composer](https://getcomposer.org/)
 - [PHPUnit](https://phpunit.de/)
 - [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+- [ESLint](https://github.com/eslint/eslint)
+- [Airbnb ESLint Config](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
