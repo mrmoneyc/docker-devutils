@@ -1,0 +1,58 @@
+FROM alpine:3.3
+MAINTAINER Jeremy Chang <jeremychang@qnap.com>
+
+ENV NODE_VERSION=v5.10.1 NPM_VERSION=3
+ENV CONFIG_FLAGS="--fully-static --without-npm" BUILDTEMP_PKGS="make gcc g++ binutils-gold python linux-headers paxctl gnupg libgcc libstdc++" RM_DIRS=/usr/include
+
+RUN apk update && \
+    apk add --no-cache bash unzip curl wget git fakeroot ca-certificates tzdata \
+            php-fpm php-json php-zlib php-xml php-xmlreader php-pdo php-phar php-openssl \
+            php-pdo_mysql php-mysqli php-gd php-iconv php-mcrypt \
+            openjdk7-jre \
+            ${BUILDTEMP_PKGS}
+
+RUN apk add -u musl
+RUN rm -rf /var/cache/apk/*
+
+RUN cp /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
+    echo "Asia/Taipei" >  /etc/timezone
+
+RUN mkdir -p /bin
+WORKDIR /bin
+
+RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php && \
+    php -r "if (hash('SHA384', file_get_contents('composer-setup.php')) === '7228c001f88bee97506740ef0888240bd8a760b046ee16db8f4095c0d8d525f2367663f22a46b48d072c816e7fe19959') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
+    php composer-setup.php && \
+    php -r "unlink('composer-setup.php');" && \
+    mv composer.phar composer
+
+RUN wget https://phar.phpunit.de/phpunit.phar -O phpunit && \
+    chmod +x phpunit
+
+RUN composer global require "squizlabs/php_codesniffer"
+
+WORKDIR /
+
+# RUN curl -o node-${NODE_VERSION}.tar.gz -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.gz && \
+    # curl -o SHASUMS256.txt.asc -sSL https://nodejs.org/dist/${VERSION}/SHASUMS256.txt.asc && \
+    # grep node-${NODE_VERSION}.tar.gz SHASUMS256.txt.asc | sha256sum -c - && \
+    # tar -zxf node-${NODE_VERSION}.tar.gz && \
+    # cd /node-${NODE_VERSION} && \
+    # ./configure --prefix=/usr ${CONFIG_FLAGS} && \
+    # make -j$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
+    # make install && \
+    # paxctl -cm /usr/bin/node && \
+    # cd / && \
+    # if [ -x /usr/bin/npm ]; then \
+      # npm install -g npm@${NPM_VERSION} && \
+      # find /usr/lib/node_modules/npm -name test -o -name .bin -type d | xargs rm -rf; \
+    # fi
+# RUN apk del ${BUILDTEMP_PKGS} && \
+    # rm -rf /etc/ssl /node-${VERSION}.tar.gz /SHASUMS256.txt.asc /node-${VERSION} ${RM_DIRS} \
+    # /usr/share/man /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp /root/.gnupg \
+    # /usr/lib/node_modules/npm/man /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html
+
+RUN ln -s $(which awk) /bin/awk
+
+ADD files/entry.sh /
+ENTRYPOINT ["/entry.sh"]
