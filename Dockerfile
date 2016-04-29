@@ -12,6 +12,8 @@ RUN apk add -u musl
 RUN cp /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
     echo "Asia/Taipei" >  /etc/timezone
 
+RUN sed -i "s/memory_limit = 128M/memory_limit = 1024M/g" /etc/php/php.ini
+
 RUN mkdir -p /bin
 WORKDIR /bin
 
