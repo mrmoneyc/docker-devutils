@@ -4,7 +4,7 @@ MAINTAINER Jeremy Chang <jeremychang@qnap.com>
 RUN apk update && \
     apk add --no-cache bash unzip curl wget git fakeroot ca-certificates tzdata \
             php-fpm php-json php-zlib php-xml php-xmlreader php-pdo php-phar php-openssl \
-            php-pdo_mysql php-mysqli php-gd php-iconv php-mcrypt php-curl \
+            php-pdo_mysql php-mysqli php-gd php-iconv php-mcrypt php-curl php-ctype \
             openjdk7-jre nodejs
 
 RUN apk add -u musl
