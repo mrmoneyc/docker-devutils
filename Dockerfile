@@ -23,6 +23,7 @@ RUN composer self-update
 RUN wget https://phar.phpunit.de/phpunit.phar -O phpunit && \
     chmod +x phpunit
 
+RUN composer global require "hirak/prestissimo"
 RUN composer global require "squizlabs/php_codesniffer"
 
 RUN npm i -g npm
