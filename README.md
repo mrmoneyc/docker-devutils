@@ -6,6 +6,7 @@ Usage
 ```
 $ cd my_project
 $ docker run -it --rm -v ${PWD}:/my_project mrmoneyc/docker-devutils bash -c "cd /my_project; <UTILITY_COMMAND>"
+$ docker run -it --rm -v ${PWD}:/my_project -w /my_project mrmoneyc/docker-devutils <UTILITY_COMMAND>
 ```
 
 Utility List
