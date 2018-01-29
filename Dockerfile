@@ -27,7 +27,7 @@ RUN composer global require "hirak/prestissimo"
 RUN composer global require "squizlabs/php_codesniffer"
 
 RUN npm i -g npm
-RUN npm i -g eslint babel-eslint gulp eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y
+RUN npm i -g yarn eslint babel-eslint gulp eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y
 
 # Clear cache
 RUN rm -rf ~/.npm && npm cache clear && \
