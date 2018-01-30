@@ -5,7 +5,8 @@ RUN apk update && \
     apk add --no-cache bash unzip curl wget git fakeroot ca-certificates tzdata \
             php5-fpm php5-json php5-zlib php5-xml php5-xmlreader php5-pdo php5-phar php5-openssl \
             php5-pdo_mysql php5-mysqli php5-sqlite3 php5-pdo_sqlite php5-gd php5-iconv php5-mcrypt php5-curl php5-ctype \
-            openjdk7-jre nodejs python2
+            openjdk7-jre nodejs python2 \
+            make g++
 
 RUN apk add -u musl
 
